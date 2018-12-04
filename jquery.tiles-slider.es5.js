@@ -1,3 +1,5 @@
+'use strict';
+
 /*!
  * Tiles Slider jQuery plugin
  * Author: Andrey Matin
@@ -5,8 +7,8 @@
  * Licensed under the MIT license
  */
 
-((($, window, document, undefined) => {
-  $(() => {
+(function ($, window, document, undefined) {
+  $(function () {
 
     /**
      * Check if namespace has already been initialized
@@ -23,7 +25,7 @@
       /**
        * Defaults
        */
-      let defaults = {
+      var defaults = {
         delay: 400, // Timer Delay
         tiles: 16, // Tiles in the shape
         effect: 'stairway'
@@ -32,10 +34,10 @@
       /**
        * Settings
        */
-      let opt = $.extend({}, defaults, options);
+      var opt = $.extend({}, defaults, options);
 
       // To avoid scope issues, use 'base' instead of 'this' to reference this class from internal events and functions.
-      const base = this;
+      var base = this;
 
       /**
        * Properties
@@ -46,17 +48,17 @@
       /**
        * Init
        */
-      base.init = () => {
-        let shapes = []; // Shape Elements
+      base.init = function () {
+        var shapes = []; // Shape Elements
 
         /**
          * Create List of the shapes
          */
-        for (let i = 0; i < base.imgsLength; i++) {
-          for (let j = 0; j < opt.tiles; j++) {
-            let imgSrc = base.imgs[i].src;
-            let imgClass = 'o-' + j;
-            let imgTile = '<img src="' + imgSrc + '" alt="" class="o ' + imgClass + '" style="z-index:' + i + '" data-index="' + i + '">';
+        for (var i = 0; i < base.imgsLength; i++) {
+          for (var j = 0; j < opt.tiles; j++) {
+            var imgSrc = base.imgs[i].src;
+            var imgClass = 'o-' + j;
+            var imgTile = '<img src="' + imgSrc + '" alt="" class="o ' + imgClass + '" style="z-index:' + i + '" data-index="' + i + '">';
             shapes.push(imgTile);
           }
         }
@@ -82,25 +84,25 @@
        * Stairway effect
        */
       function stairway() {
-        let list = $(base.find('.o')); // Tiles List
-        let len = list.length; // Tiles Count
-        let i = 0; // Tales Index
-        let dip = base.imgsLength;
+        var list = $(base.find('.o')); // Tiles List
+        var len = list.length; // Tiles Count
+        var i = 0; // Tales Index
+        var dip = base.imgsLength;
 
         // Stairs slider
-        let interval = setInterval(function () {
-          let listItem = $(list[i]);
+        var interval = setInterval(function () {
+          var listItem = $(list[i]);
           listItem.fadeOut('slow', function () {
-            let obj = $(this);
-            let z = obj.css("z-index");
+            var obj = $(this);
+            var z = obj.css("z-index");
             z = z - dip;
             obj.attr('style', 'z-index: ' + z).show();
 
             // Reset z-index
             if (i == 0) {
-              for (let j = 0; j < len; j++) {
-                let listJItem = $(list[j]);
-                let dataIndex = listJItem.data('index');
+              for (var j = 0; j < len; j++) {
+                var listJItem = $(list[j]);
+                var dataIndex = listJItem.data('index');
                 listJItem.attr('style', 'z-index: ' + dataIndex);
               }
             }
@@ -120,33 +122,33 @@
        * Chaotic effect
        */
       function chaotic() {
-        let list = $(base.find('.o')); // Tiles List
-        let len = list.length; // Tiles Count
-        let i = 0; // Tales Index
-        let dip = base.imgsLength;
-        let src = list;
-        let data = [];
+        var list = $(base.find('.o')); // Tiles List
+        var len = list.length; // Tiles Count
+        var i = 0; // Tales Index
+        var dip = base.imgsLength;
+        var src = list;
+        var data = [];
         var step = opt.tiles;
         var start = 0 - step;
         var end = step;
-        let img = '';
+        var img = '';
 
-        let interval = setInterval(function () {
+        var interval = setInterval(function () {
           if (data.length) {
             img = data.splice(data.length * Math.random() | 0, 1)[0];
-            let listItem = $(img)
+            var listItem = $(img);
 
             listItem.fadeOut('slow', function () {
-              let obj = $(this);
-              let z = obj.css("z-index");
+              var obj = $(this);
+              var z = obj.css("z-index");
               z = z - dip;
               obj.attr('style', 'z-index: ' + z).show();
 
               // Reset z-index
               if (i == 0) {
-                for (let j = 0; j < len; j++) {
-                  let listJItem = $(list[j]);
-                  let dataIndex = listJItem.data('index');
+                for (var j = 0; j < len; j++) {
+                  var listJItem = $(list[j]);
+                  var dataIndex = listJItem.data('index');
                   listJItem.attr('style', 'z-index: ' + dataIndex);
                 }
               }
@@ -159,7 +161,7 @@
             data = src.slice(start, end);
           }
 
-          if (end == (len + step)) {
+          if (end == len + step) {
             i = 0;
             clearInterval(interval);
             chaotic();
@@ -167,9 +169,7 @@
         }, opt.delay);
       }
 
-
       return this;
     };
-
   });
-}))(jQuery, window, document);
+})(jQuery, window, document);
