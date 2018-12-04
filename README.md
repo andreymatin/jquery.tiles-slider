@@ -1,6 +1,6 @@
 # Tiles Slider jQuery Plugin
 
-Slide effects for shapes and tiles
+Slide effects for CSS3 shapes and tiles
 
 ## How To Use
 
