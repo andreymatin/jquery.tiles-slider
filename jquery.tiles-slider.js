@@ -126,15 +126,15 @@
         let dip = base.imgsLength;
         let src = list;
         let data = [];
-        var step = opt.tiles;
-        var start = 0 - step;
-        var end = step;
+        let step = opt.tiles;
+        let start = 0 - step;
+        let end = step;
         let img = '';
 
         let interval = setInterval(function () {
           if (data.length) {
             img = data.splice(data.length * Math.random() | 0, 1)[0];
-            let listItem = $(img)
+            let listItem = $(img);
 
             listItem.fadeOut('slow', function () {
               let obj = $(this);
